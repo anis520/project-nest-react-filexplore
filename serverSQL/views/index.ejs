@@ -1,0 +1,41 @@
+<%-include("layout/header") %>
+
+<div class="overflow-x-auto p-5 md:p-10">
+  <table class="table">
+    <!-- head -->
+    <thead>
+      <tr>
+        <th>#id</th>
+        <th>Name</th>
+        <th>Job</th>
+        <th>Sallary</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% data.forEach(function(item) { %>
+
+      <tr>
+        <th>1</th>
+        <td><%= item.name %></td>
+        <td><%= item.job%></td>
+        <td><%= item.sallary%></td>
+        <td class="flex gap-4 text-xl">
+          <a href="/update/<%= item.id %>">
+            <i
+              class="fa-solid fa-pen-to-square bg-blue-400 text-white p-1 rounded-md cursor-pointer"
+            ></i>
+          </a>
+          <i
+            onclick="deleteData('<%= item.id %>')"
+            class="fa-solid fa-trash bg-red-500 text-white p-1 rounded-md cursor-pointer"
+          ></i>
+        </td>
+      </tr>
+
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<%-include("layout/footer") %>
