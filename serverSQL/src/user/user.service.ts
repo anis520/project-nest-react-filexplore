@@ -12,7 +12,29 @@ export class UserService {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
 
-  findAll() {
+  findAll(): Promise<User[]> {
     return this.userRepository.find();
+  }
+
+  add(createUserDto: CreateUserDto): Promise<User> {
+    const user: User = new User();
+    user.name = createUserDto.name;
+    user.sallary = createUserDto.sallary;
+    user.job = createUserDto.job;
+    return this.userRepository.save(user);
+  }
+
+  update(id: number, updateUserDto: UpdateUserDto) {
+    const user: User = new User();
+    user.name = updateUserDto.name;
+    user.sallary = updateUserDto.sallary;
+    user.job = updateUserDto.job;
+    user.id = id;
+    return this.userRepository.save(user);
+  }
+  remove(id: number) {
+    const deltedData = this.userRepository.findOne({ where: { id } });
+    this.userRepository.delete(id);
+    return deltedData;
   }
 }
