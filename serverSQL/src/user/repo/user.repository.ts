@@ -13,9 +13,9 @@ export class UserRepository extends Repository<User> {
     return this.save(newUser);
   }
 
-  findUserById(userId: number): Promise<User | undefined> {
-    return this.findOne(userId);
-  }
+  // findUserById(userId: number): Promise<User | undefined> {
+  //   return this.findOne();
+  // }
 
   findUsersByName(name: string): Promise<User[]> {
     return this.find({ where: { name } });

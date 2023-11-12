@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
+import { FileExploreModule } from './FileExplore/fileExplore.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { UserModule } from './user/user.module';
       // logging: true,
     }),
     UserModule,
+    FileExploreModule,
   ],
   controllers: [AppController],
   providers: [],
