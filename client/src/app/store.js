@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import todoReducer from "../features/todo/todoSlice";
+import fileExploreReducer from "../features/filexplore/FileExplore";
 
 //create sotre
 const store = configureStore({
   reducer: {
-    todo: todoReducer,
+    fileExplore: fileExploreReducer,
   },
   middleware: (getDefaultMiddlewares) => getDefaultMiddlewares(),
   devTools: true,

@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { userAdd } from "../../features/todo/todoapiSlice";
 import { uploadFileWithlink } from "../../firebase/services/AllService";
+import {
+  filesAdd,
+  filesUpdate,
+} from "../../features/filexplore/FileExploreApiSlice";
 
 const UploadFile = ({ showUploadFile, setshowUploadFile }) => {
   const [file, setfile] = useState(null);
@@ -14,7 +17,7 @@ const UploadFile = ({ showUploadFile, setshowUploadFile }) => {
   const handleCreateFolder = async () => {
     setshowUploadFile(false);
     const fileinfo = await uploadFileWithlink(file);
-    dispatch(userAdd({ title: file.name, type: "photo", url: fileinfo }));
+    dispatch(filesAdd({ title: file.name, type: "photo", url: fileinfo }));
     console.log(fileinfo);
     console.log(file);
   };

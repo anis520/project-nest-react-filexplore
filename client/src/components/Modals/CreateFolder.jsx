@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { userAdd } from "../../features/todo/todoapiSlice";
+import { filesAdd } from "../../features/filexplore/FileExploreApiSlice";
 
 const CreateFolder = ({ showCreateFolder, setShowCreateFolder }) => {
   const dispatch = useDispatch();
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState("New folder");
   const handleCloseCreateFolderModal = () => {
     setShowCreateFolder(false);
   };
 
   const handleCreateFolder = () => {
-    dispatch(userAdd({ title: input, type: "folder" }));
+    dispatch(filesAdd({ title: input, type: "folder" }));
     setShowCreateFolder(false);
   };
 

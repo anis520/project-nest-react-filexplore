@@ -17,14 +17,15 @@ import {
 } from "react-icons/bs";
 import CreateFolder from "../Modals/CreateFolder";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserData } from "../../features/todo/todoSlice";
-import { userDelete } from "../../features/todo/todoapiSlice";
+import { filesDelete } from "../../features/filexplore/FileExploreApiSlice";
 import UploadFile from "../Modals/UploadFile";
 import { deleteFile } from "../../firebase/services/AllService";
+import { getFilesData } from "../../features/filexplore/FileExplore";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { users } = useSelector(getUserData);
+  const { allFiles } = useSelector(getFilesData);
+  console.log(allFiles);
   const [view, setview] = useState(false);
   const [showCreateFolder, setShowCreateFolder] = useState(false);
   const [showUploadFile, setshowUploadFile] = useState(false);
@@ -36,7 +37,7 @@ const Home = () => {
     setshowUploadFile(true);
   };
   const handleDelete = (data) => {
-    dispatch(userDelete(data.id));
+    dispatch(filesDelete(data.id));
     deleteFile(data.url);
   };
 
@@ -146,7 +147,7 @@ const Home = () => {
           }    `}
         >
           {/* single folder */}
-          {users?.map((item) => {
+          {allFiles?.map((item) => {
             return item.type == "folder" ? (
               <div
                 key={item.id}
