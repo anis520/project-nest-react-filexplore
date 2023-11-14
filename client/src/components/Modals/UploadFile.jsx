@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { uploadFileWithlink } from "../../firebase/services/AllService";
+import {
+  categorizeFileType,
+  uploadFileWithlink,
+} from "../../firebase/services/AllService";
 import {
   filesAdd,
   filesUpdate,
@@ -17,9 +20,18 @@ const UploadFile = ({ showUploadFile, setshowUploadFile }) => {
   const handleCreateFolder = async () => {
     setshowUploadFile(false);
     const fileinfo = await uploadFileWithlink(file);
-    dispatch(filesAdd({ title: file.name, type: "photo", url: fileinfo }));
-    console.log(fileinfo);
-    console.log(file);
+
+    const fileParts = file.name.split(".");
+    const fileExtension = fileParts[fileParts.length - 1];
+    const fileType = categorizeFileType(fileExtension);
+    dispatch(
+      filesAdd({
+        title: file.name,
+        type: fileType,
+        ext: fileExtension,
+        url: fileinfo,
+      })
+    );
   };
 
   return (

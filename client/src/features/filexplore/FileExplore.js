@@ -8,6 +8,7 @@ const fileExplore = createSlice({
 
   initialState: {
     allFiles: null,
+    filterData: null,
     message: null,
     error: null,
     loading: false,
@@ -16,6 +17,9 @@ const fileExplore = createSlice({
     setMessageEmpty: (state) => {
       (state.message = null), (state.error = null);
     },
+    setQuickTab: (state, action) => {
+      state.filterData = action.payload;
+    },
   },
   extraReducers: (builder) => {
     // get all users
@@ -23,7 +27,9 @@ const fileExplore = createSlice({
       state.loading = true;
     });
     builder.addCase(getAllFiles.fulfilled, (state, action) => {
-      (state.loading = false), (state.allFiles = action.payload.data);
+      (state.loading = false),
+        (state.allFiles = action.payload.data),
+        (state.filterData = action.payload.data);
     });
     builder.addCase(getAllFiles.rejected, (state, action) => {
       state.loading = false;
@@ -73,6 +79,6 @@ const fileExplore = createSlice({
 // selectors
 export const getFilesData = (state) => state.fileExplore;
 // action
-export const { setMessageEmpty } = fileExplore.actions;
+export const { setMessageEmpty, setQuickTab } = fileExplore.actions;
 // slice
 export default fileExplore.reducer;
