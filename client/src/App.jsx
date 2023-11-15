@@ -8,6 +8,7 @@ import { RouterProvider } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Home from "./components/pages/Home";
 import { getAllFiles } from "./features/filexplore/FileExploreApiSlice";
+import RootLayout from "./components/Layout/RootLayout";
 function App() {
   const dispatch = useDispatch();
   const [count, setCount] = useState(0);
@@ -18,7 +19,7 @@ function App() {
 
   return (
     <div>
-      <Home />
+      <RouterProvider router={router} />;
     </div>
   );
 }

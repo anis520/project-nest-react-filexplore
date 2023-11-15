@@ -9,6 +9,7 @@ const fileExplore = createSlice({
   initialState: {
     allFiles: null,
     filterData: null,
+    favourite: [],
     message: null,
     error: null,
     loading: false,
@@ -20,9 +21,17 @@ const fileExplore = createSlice({
     setQuickTab: (state, action) => {
       state.filterData = action.payload;
     },
+    setFavourite: (state, action) => {
+      state.favourite.push(action.payload);
+    },
+    setUnFavourite: (state, action) => {
+      state.favourite = state.favourite.filter(
+        (i) => i.id !== action.payload.id
+      );
+    },
   },
   extraReducers: (builder) => {
-    // get all users
+    // get all files
     builder.addCase(getAllFiles.pending, (state, action) => {
       state.loading = true;
     });
@@ -34,7 +43,7 @@ const fileExplore = createSlice({
     builder.addCase(getAllFiles.rejected, (state, action) => {
       state.loading = false;
     });
-    // add new user
+    // add new file
     builder.addCase(filesAdd.pending, (state, action) => {
       state.loading = true;
     });
@@ -44,7 +53,7 @@ const fileExplore = createSlice({
     builder.addCase(filesAdd.rejected, (state, action) => {
       state.loading = false;
     });
-    // update  user
+    // update  file
     builder.addCase(filesUpdate.pending, (state, action) => {
       state.loading = true;
     });
@@ -58,7 +67,7 @@ const fileExplore = createSlice({
       state.loading = false;
     });
 
-    // delete  user
+    // delete  file
     builder.addCase(filesDelete.pending, (state, action) => {
       state.loading = true;
     });
@@ -79,6 +88,7 @@ const fileExplore = createSlice({
 // selectors
 export const getFilesData = (state) => state.fileExplore;
 // action
-export const { setMessageEmpty, setQuickTab } = fileExplore.actions;
+export const { setMessageEmpty, setQuickTab, setFavourite, setUnFavourite } =
+  fileExplore.actions;
 // slice
 export default fileExplore.reducer;
