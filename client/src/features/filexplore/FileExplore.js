@@ -10,6 +10,7 @@ const fileExplore = createSlice({
     allFiles: null,
     filterData: null,
     favourite: [],
+    root: JSON.parse(localStorage.getItem("root")),
     message: null,
     error: null,
     loading: false,
@@ -17,6 +18,14 @@ const fileExplore = createSlice({
   reducers: {
     setMessageEmpty: (state) => {
       (state.message = null), (state.error = null);
+    },
+    setRoot: (state, action) => {
+      localStorage.setItem("root", JSON.stringify(action.payload));
+      state.root = action.payload;
+
+      state.filterData = state.allFiles.filter(
+        (i) => i.parentId == action.payload.id
+      );
     },
     setQuickTab: (state, action) => {
       state.filterData = action.payload;
@@ -38,7 +47,9 @@ const fileExplore = createSlice({
     builder.addCase(getAllFiles.fulfilled, (state, action) => {
       (state.loading = false),
         (state.allFiles = action.payload.data),
-        (state.filterData = action.payload.data);
+        (state.filterData = state.allFiles.filter(
+          (i) => i.parentId == state.root.id
+        ));
     });
     builder.addCase(getAllFiles.rejected, (state, action) => {
       state.loading = false;
@@ -48,7 +59,9 @@ const fileExplore = createSlice({
       state.loading = true;
     });
     builder.addCase(filesAdd.fulfilled, (state, action) => {
-      (state.loading = false), state.allFiles.push(action.payload.data);
+      (state.loading = false),
+        state.allFiles.push(action.payload.data),
+        state.filterData.push(action.payload.data);
     });
     builder.addCase(filesAdd.rejected, (state, action) => {
       state.loading = false;
@@ -75,6 +88,9 @@ const fileExplore = createSlice({
       state.allFiles = state.allFiles.filter(
         (i) => i.id !== action.payload.data.id
       );
+      state.filterData = state.filterData.filter(
+        (i) => i.id !== action.payload.data.id
+      );
       state.loading = false;
     });
     builder.addCase(filesDelete.rejected, (state, action) => {
@@ -88,7 +104,12 @@ const fileExplore = createSlice({
 // selectors
 export const getFilesData = (state) => state.fileExplore;
 // action
-export const { setMessageEmpty, setQuickTab, setFavourite, setUnFavourite } =
-  fileExplore.actions;
+export const {
+  setMessageEmpty,
+  setQuickTab,
+  setFavourite,
+  setUnFavourite,
+  setRoot,
+} = fileExplore.actions;
 // slice
 export default fileExplore.reducer;

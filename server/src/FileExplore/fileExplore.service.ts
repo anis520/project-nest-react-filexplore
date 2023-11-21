@@ -23,6 +23,7 @@ export class FileExploreService {
     fileExplore.ext = fileExploreDto.ext;
     fileExplore.parentId = fileExploreDto.parentId;
     fileExplore.url = fileExploreDto.url;
+    fileExplore.size = fileExploreDto.size;
 
     return this.FileExploreRepository.save(fileExplore);
   }

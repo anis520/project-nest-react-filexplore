@@ -30,12 +30,13 @@ import {
   getFilesData,
   setFavourite,
   setQuickTab,
+  setRoot,
   setUnFavourite,
 } from "../../features/filexplore/FileExplore";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { allFiles, filterData, favourite } = useSelector(getFilesData);
+  const { allFiles, filterData, favourite, root } = useSelector(getFilesData);
 
   const [view, setview] = useState(true);
   const [quick, setQuick] = useState(null);
@@ -60,9 +61,8 @@ const Home = () => {
     setQuick(type);
   };
 
-  const RootHandler = () => {
-    dispatch(setQuickTab(allFiles));
-    setQuick(null);
+  const RootHandler = (data) => {
+    dispatch(setRoot(data));
   };
 
   const handleFavorite = (data) => {
@@ -71,6 +71,16 @@ const Home = () => {
   const handleUnFavorite = (data) => {
     dispatch(setUnFavourite(data));
   };
+
+  const handleBack = () => {
+    let get = allFiles.find((i) => i.id == root.parentId);
+    if (get) {
+      dispatch(setRoot(get));
+    } else {
+      dispatch(setRoot({ parentId: null }));
+    }
+  };
+
   return (
     <div className="w-10/12 h-screen overflow-y-auto  ">
       {/* create folder model  */}
@@ -88,7 +98,10 @@ const Home = () => {
         {/* topbar  */}
         <div className="flex  items-center p-2 gap-3  ">
           <div className="flex w-20 justify-between px-1">
-            <FcPrevious className="hover:bg-zinc-200 h-6 w-6 rounded-md duration-300 cursor-pointer p-1" />
+            <FcPrevious
+              onClick={handleBack}
+              className="hover:bg-zinc-200 h-6 w-6 rounded-md duration-300 cursor-pointer p-1"
+            />
             <FcNext className="hover:bg-zinc-200 h-6 w-6 rounded-md duration-300 cursor-pointer p-1" />
           </div>
           {/* button  */}
@@ -98,8 +111,8 @@ const Home = () => {
           <div className="flex items-center w-full border rounded-full px-3 py-1 gap-1">
             <FcHome className="" />
             <FcNext />
-            <p className="font-semibold text-sm">Home</p>
-            <FcNext />
+            <p className="font-semibold text-sm">{root?.title}</p>
+
             <p className="font-semibold text-sm">{quick}</p>
           </div>
           <div className="relative ">
@@ -167,6 +180,7 @@ const Home = () => {
           return (
             <div
               key={item.id}
+              onDoubleClick={() => RootHandler(item)}
               className={`relative   bg-zinc-100 hover:bg-zinc-200  duration-75 flex  ${
                 view ? "flex-row border pe-20" : " flex-col"
               }   items-center justify-between h-fit  p-1 rounded-lg    duration-300 `}

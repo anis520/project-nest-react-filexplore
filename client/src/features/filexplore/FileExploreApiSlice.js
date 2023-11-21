@@ -17,6 +17,7 @@ export const getAllFiles = createAsyncThunk(
 
 // add new user
 export const filesAdd = createAsyncThunk("todo/filesAdd", async (data) => {
+  console.log(data);
   try {
     const response = await axios.post("http://localhost:3001/add", data);
     return response;

@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { filesAdd } from "../../features/filexplore/FileExploreApiSlice";
+import { getFilesData } from "../../features/filexplore/FileExplore";
 
 const CreateFolder = ({ showCreateFolder, setShowCreateFolder }) => {
   const dispatch = useDispatch();
+  const { root } = useSelector(getFilesData);
   const [input, setInput] = useState("New folder");
   const handleCloseCreateFolderModal = () => {
     setShowCreateFolder(false);
   };
 
   const handleCreateFolder = () => {
-    dispatch(filesAdd({ title: input, type: "folder" }));
+    dispatch(filesAdd({ title: input, type: "folder", parentId: root?.id }));
     setShowCreateFolder(false);
   };
 

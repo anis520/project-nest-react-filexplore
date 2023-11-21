@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   categorizeFileType,
   uploadFileWithlink,
@@ -8,9 +8,11 @@ import {
   filesAdd,
   filesUpdate,
 } from "../../features/filexplore/FileExploreApiSlice";
+import { getFilesData } from "../../features/filexplore/FileExplore";
 
 const UploadFile = ({ showUploadFile, setshowUploadFile }) => {
   const [file, setfile] = useState(null);
+  const { root } = useSelector(getFilesData);
   const dispatch = useDispatch();
   const [input, setInput] = useState("");
   const handleCloseCreateFolderModal = () => {
@@ -24,12 +26,19 @@ const UploadFile = ({ showUploadFile, setshowUploadFile }) => {
     const fileParts = file.name.split(".");
     const fileExtension = fileParts[fileParts.length - 1];
     const fileType = categorizeFileType(fileExtension);
+
+    //get file size
+    const fileSizeInKB = file.size / 1024; // Convert bytes to kilobytes
+    const fileSizeInMB = fileSizeInKB / 1024; // Convert kilobytes to megabytes
+
     dispatch(
       filesAdd({
         title: file.name,
         type: fileType,
         ext: fileExtension,
         url: fileinfo,
+        parentId: root?.id,
+        size: Math.ceil(fileSizeInMB),
       })
     );
   };

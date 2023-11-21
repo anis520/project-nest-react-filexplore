@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import CreateFolder from "../Modals/CreateFolder";
 import UploadFile from "../Modals/UploadFile";
-import { FcApproval, FcFolder, FcLowPriority } from "react-icons/fc";
+import {
+  FcAcceptDatabase,
+  FcApproval,
+  FcFolder,
+  FcLowPriority,
+} from "react-icons/fc";
 import { BsFillStarFill } from "react-icons/bs";
 import {
   getFilesData,
   setQuickTab,
+  setRoot,
 } from "../../features/filexplore/FileExplore";
 import { useDispatch, useSelector } from "react-redux";
 import Home from "../pages/Home";
@@ -13,7 +19,7 @@ import { Outlet } from "react-router-dom";
 
 const RootLayout = () => {
   const dispatch = useDispatch();
-  const { allFiles, favourite } = useSelector(getFilesData);
+  const { allFiles, favourite, filterData } = useSelector(getFilesData);
 
   const [quick, setQuick] = useState(null);
   const [showCreateFolder, setShowCreateFolder] = useState(false);
@@ -25,22 +31,16 @@ const RootLayout = () => {
     dispatch(setQuickTab(item));
     setQuick(type);
   };
-
-  const RootHandler = () => {
-    dispatch(setQuickTab(allFiles));
-    setQuick(null);
+  const RootHomeHandler = () => {
+    dispatch(setRoot({ parentId: null }));
   };
-
   return (
     <>
       <div className="flex">
         {/* sidebar */}
         <div className="w-2/12 p-3 bg-zinc-100 h-screen border-r">
-          <div className="">
-            <p
-              onClick={RootHandler}
-              className="p-2 flex items-center gap-2   duration-300 cursor-pointer rounded-lg"
-            >
+          <div onClick={RootHomeHandler} className="">
+            <p className="p-2 flex items-center gap-2   duration-300 cursor-pointer rounded-lg">
               <FcFolder className="h-8 w-8 " />{" "}
               <span className="font-bold capitalize">explorer </span>
             </p>
@@ -113,24 +113,19 @@ const RootLayout = () => {
                 Video
               </li>
             </ul>
-            <p
-              className="px-4 mt-2
-           text-sm font-semibold text-zinc-600 flex justify-between items-center gap-2 mb-2"
-            >
-              <span>Resent</span> <FcApproval className="text-yellow-400 " />
-            </p>
-            <hr />
-            {allFiles?.slice(0, 5).map((item) => {
-              return (
-                <p
-                  className={`hover:bg-slate-200
-             px-4 py-1 cursor-pointer rounded-md`}
-                  key={item.id}
-                >
-                  {item.title.slice(0, 12)}
-                </p>
-              );
-            })}{" "}
+            {/* storage  */}
+            <div className="w-10/12 mx-auto space-y-2 border-t-2 py-4 text-sm font-semibold">
+              <p className=" flex justify-between ">
+                Storage <FcAcceptDatabase />
+              </p>
+              <div className="w-full h-3 bg-slate-300 rounded-md p-[2px]">
+                <div
+                  className={`h-full w-4/12
+                  } bg-green-500 rounded-md`}
+                ></div>
+              </div>
+              <p className="font-normal text-slate-500">21 mb of 100 mb used</p>
+            </div>
           </div>
         </div>
         {/* sidebar  */}

@@ -17,4 +17,6 @@ export class FileExplore {
 
   @Column({ default: null })
   parentId: string;
+  @Column({ default: null })
+  size: number;
 }
