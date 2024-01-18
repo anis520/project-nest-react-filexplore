@@ -7,12 +7,13 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  ValidationPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-@Controller('/adduser')
+@Controller('/user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -23,7 +24,7 @@ export class UserController {
     return getdata;
   }
   @Post('/add')
-  addNew(@Body() createUserDto: CreateUserDto) {
+  addNew(@Body(ValidationPipe) createUserDto: CreateUserDto) {
     return this.userService.add(createUserDto);
   }
   @Patch('/update/:id')

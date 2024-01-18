@@ -4,5 +4,5 @@ export class CreateFileExploreDto {
   ext: string;
   url: string;
   parentId: string;
-  size:number
+  size: number;
 }

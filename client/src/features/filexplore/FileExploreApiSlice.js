@@ -1,12 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+export const RootUrl = "http://localhost:3001";
+
 //get all users
 export const getAllFiles = createAsyncThunk(
-  "todo/getAllFiles",
+  "FileExplore/getAllFiles",
   async (data) => {
     try {
-      const response = await axios.get("http://localhost:3001");
+      const response = await axios.get(RootUrl);
 
       return response;
     } catch (error) {
@@ -16,19 +18,22 @@ export const getAllFiles = createAsyncThunk(
 );
 
 // add new user
-export const filesAdd = createAsyncThunk("todo/filesAdd", async (data) => {
-  console.log(data);
-  try {
-    const response = await axios.post("http://localhost:3001/add", data);
-    return response;
-  } catch (error) {
-    throw new Error(error.response.data.message);
+export const filesAdd = createAsyncThunk(
+  "FileExplore/filesAdd",
+  async (data) => {
+    console.log(data);
+    try {
+      const response = await axios.post(`${RootUrl}/add`, data);
+      return response;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+    }
   }
-});
+);
 
 // update  user
 export const filesUpdate = createAsyncThunk(
-  "todo/filesUpdate",
+  "FileExplore/filesUpdate",
   async (data) => {
     try {
       const response = await axios.patch(
@@ -43,12 +48,15 @@ export const filesUpdate = createAsyncThunk(
 );
 
 // delete  user
-export const filesDelete = createAsyncThunk("todo/filesDelete", async (id) => {
-  try {
-    const response = await axios.delete(`http://localhost:3001/remove/${id}`);
+export const filesDelete = createAsyncThunk(
+  "FileExplore/filesDelete",
+  async (id) => {
+    try {
+      const response = await axios.delete(`${RootUrl}/remove/${id}`);
 
-    return response;
-  } catch (error) {
-    throw new Error(error.response.data.message);
+      return response;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+    }
   }
-});
+);

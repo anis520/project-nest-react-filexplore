@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { FileExplore } from './entities/fileExplore.entity';
 import { CreateFileExploreDto } from './dto/create-FileExplore.dto';
+import { FileExplore } from './entities/fileExplore.entity';
 
 @Injectable()
 export class FileExploreService {

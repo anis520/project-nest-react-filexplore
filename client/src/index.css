@@ -2,10 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+.blockCopy {
   -webkit-user-select: none;
   -webkit-touch-callout: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+a {
+  display: block;
+  width: fit-content;
+}
+
+@keyframes ani {
+  0% {
+    opacity: 0.9;
+    color: red;
+  }
+
+  100% {
+    opacity: 1;
+    color: blue;
+  }
+}
+
+#box {
+  animation: ani 2 ease-in-out;
 }

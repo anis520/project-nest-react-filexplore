@@ -10,7 +10,9 @@ const fileExplore = createSlice({
     allFiles: null,
     filterData: null,
     favourite: [],
-    root: JSON.parse(localStorage.getItem("root")),
+    root: JSON.parse(localStorage.getItem("root"))
+      ? JSON.parse(localStorage.getItem("root"))
+      : { id: null },
     message: null,
     error: null,
     loading: false,

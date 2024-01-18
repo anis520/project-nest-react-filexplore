@@ -5,9 +5,11 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
   @Column()
-  name: string;
+  username: string;
   @Column()
-  job: string;
+  email: string;
   @Column()
-  sallary: number;
+  password: string;
+  @Column()
+  role: string;
 }

@@ -36,7 +36,7 @@ const RootLayout = () => {
   };
   return (
     <>
-      <div className="flex">
+      <div className="flex blockCopy">
         {/* sidebar */}
         <div className="w-2/12 p-3 bg-zinc-100 h-screen border-r">
           <div onClick={RootHomeHandler} className="">
@@ -120,11 +120,13 @@ const RootLayout = () => {
               </p>
               <div className="w-full h-3 bg-slate-300 rounded-md p-[2px]">
                 <div
-                  className={`h-full w-4/12
+                  className={`h-full w-[22%]
                   } bg-green-500 rounded-md`}
                 ></div>
               </div>
-              <p className="font-normal text-slate-500">21 mb of 100 mb used</p>
+              <p className="font-semibold text-slate-500 text-xs ">
+                21 mb of 100 mb used
+              </p>
             </div>
           </div>
         </div>
