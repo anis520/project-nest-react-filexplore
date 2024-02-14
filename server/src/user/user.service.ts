@@ -41,8 +41,14 @@ export class UserService {
 
     return deltedData;
   }
-  async findByUserName(username: string) {
-    const data = await this.userRepository.findOne({ where: { username } });
+  async findByUserEmail(email: string) {
+    const data = await this.userRepository.findOne({ where: { email } });
+
+    return data;
+  }
+
+  async findUserById(id: number) {
+    const data = await this.userRepository.findOne({ where: { id } });
 
     return data;
   }

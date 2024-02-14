@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/user/entities/user.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class FileExplore {
@@ -6,6 +7,7 @@ export class FileExplore {
   id: number;
   @Column()
   title: string;
+
   @Column()
   type: string;
 
@@ -19,4 +21,8 @@ export class FileExplore {
   parentId: string;
   @Column({ default: null })
   size: number;
+
+  // many files  can belong to single user
+  @ManyToOne(() => User, (user) => user.files)
+  user: User;
 }

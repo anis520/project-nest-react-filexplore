@@ -5,6 +5,7 @@ import { FileExploreModule } from './FileExplore/fileExplore.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { UserModule } from './user/user.module';
     }),
     FileExploreModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [],

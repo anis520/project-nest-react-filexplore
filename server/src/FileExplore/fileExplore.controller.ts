@@ -20,9 +20,12 @@ export class FileExploreController {
 
     return getdata;
   }
-  @Post('/add')
-  addNew(@Body() createFileExplore: CreateFileExploreDto) {
-    return this.fileExploreService.add(createFileExplore);
+  @Post('/add/:userId')
+  addNew(
+    @Body() createFileExplore: CreateFileExploreDto,
+    @Param('userId') userId: number,
+  ) {
+    return this.fileExploreService.add(createFileExplore, userId);
   }
   @Delete('/remove/:id')
   remove(@Param('id', ParseIntPipe) id: number) {

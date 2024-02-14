@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { FileExplore } from 'src/FileExplore/entities/fileExplore.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -12,4 +13,7 @@ export class User {
   password: string;
   @Column()
   role: string;
+  // one user can have multipe Files
+  @OneToMany(() => FileExplore, (fileExplore) => fileExplore.user)
+  files: FileExplore[];
 }
