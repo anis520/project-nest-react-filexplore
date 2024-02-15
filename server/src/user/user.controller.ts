@@ -8,22 +8,26 @@ import {
   Delete,
   ParseIntPipe,
   ValidationPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { RoleGuard } from 'src/auth/guard/RoleGuard';
+import { Constants } from 'src/utils/constants';
 
 @Controller('/user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
+  @UseGuards(new RoleGuard(Constants.ROLES.ADMIN_ROLE))
   async findAll() {
     const getdata = await this.userService.findAll();
 
     return getdata;
   }
-  @Post('/add')
+  @Post('/singup')
   addNew(@Body(ValidationPipe) createUserDto: CreateUserDto) {
     return this.userService.add(createUserDto);
   }
