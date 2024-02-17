@@ -15,10 +15,12 @@ import {
 } from "../../features/filexplore/FileExplore";
 import { useDispatch, useSelector } from "react-redux";
 import Home from "../pages/Home";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import { setLogout } from "../../features/user/userSlice";
 
 const RootLayout = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { allFiles, favourite, filterData } = useSelector(getFilesData);
 
   const [quick, setQuick] = useState(null);
@@ -34,6 +36,12 @@ const RootLayout = () => {
   const RootHomeHandler = () => {
     dispatch(setRoot({ parentId: null }));
   };
+  const handleLogout = () => {
+    RootHomeHandler();
+    dispatch(setLogout());
+    navigate("/");
+    location.reload();
+  };
   return (
     <>
       <div className="flex blockCopy">
@@ -45,7 +53,6 @@ const RootLayout = () => {
               <span className="font-bold capitalize">explorer </span>
             </p>
           </div>
-
           <div className="py-2 mt-5 ">
             <p
               className="px-4
@@ -129,6 +136,12 @@ const RootLayout = () => {
               </p>
             </div>
           </div>
+          <button
+            onClick={handleLogout}
+            className="bg-red-500 text-white px-3 rounded-md font-semibold m-4"
+          >
+            Logout
+          </button>
         </div>
         {/* sidebar  */}
 

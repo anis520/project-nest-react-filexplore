@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -17,13 +22,24 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  add(createUserDto: CreateUserDto): Promise<User> {
+  async add(createUserDto: CreateUserDto): Promise<any> {
     const user: User = new User();
+
+    const checkIsExist = await this.findByUserEmail(createUserDto.email);
+
+    if (checkIsExist) {
+      throw new BadRequestException('already exits');
+      // throw new HttpException('Already exist', HttpStatus.BAD_REQUEST);
+    }
     user.email = createUserDto.email;
     user.username = createUserDto.username;
     user.password = createUserDto.password;
     user.role = Constants.ROLES.NORMAL_ROLE;
-    return this.userRepository.save(user);
+
+    return {
+      user: this.userRepository.save(user),
+      message: 'User register successfull',
+    };
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

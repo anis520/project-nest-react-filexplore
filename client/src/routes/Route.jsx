@@ -5,26 +5,18 @@ import RootLayout from "../components/Layout/RootLayout";
 import LandingPage from "../components/pages/LandingPage";
 import Login from "../components/pages/Login";
 import Register from "../components/pages/Register";
+import { privateRoute } from "./PrivateRoute";
+import { publicRoute } from "./PublicRoute";
 
 // create browser router
 
 const router = createBrowserRouter([
-  {
-    element: <RootLayout />,
-    children: [{ path: "/app", element: <Home /> }],
-  },
+  ...privateRoute,
   {
     path: "/",
     element: <LandingPage />,
   },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/register",
-    element: <Register />,
-  },
+  ...publicRoute,
 ]);
 
 /// export  router

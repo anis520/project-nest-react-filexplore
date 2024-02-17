@@ -14,8 +14,13 @@ export class FileExploreService {
     private userService: UserService,
   ) {}
 
-  findAll(): Promise<FileExplore[]> {
-    return this.FileExploreRepository.find();
+  findAll(userId: any): Promise<FileExplore[]> {
+    console.log(userId);
+
+    return this.FileExploreRepository.find({
+      relations: ['user'],
+      where: { user: { id: userId } },
+    });
   }
 
   async add(

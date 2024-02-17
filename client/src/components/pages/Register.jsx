@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import banner from "../../assets/banner4.jpg";
 import register from "../../assets/register.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getRegister } from "../../features/user/userApiSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
+import { getUserData, setMessageEmpty } from "../../features/user/userSlice";
 const schema = Yup.object().shape({
   username: Yup.string().required("Please enter your name"),
   email: Yup.string()
@@ -16,6 +18,9 @@ const schema = Yup.object().shape({
 
 const Register = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { message, error } = useSelector(getUserData);
 
   const formik = useFormik({
     initialValues: { username: "", email: "", password: "" },
@@ -27,7 +32,17 @@ const Register = () => {
   });
   const { errors, touched, values, handleChange, handleSubmit } = formik;
 
-  console.log(errors);
+  useEffect(() => {
+    if (message) {
+      navigate("/login");
+      toast.success(message);
+    }
+    if (error) {
+      toast.error(error);
+    }
+    dispatch(setMessageEmpty());
+  }, [error, message, dispatch]);
+
   return (
     <div
       style={{ backgroundImage: `url(${banner})` }}

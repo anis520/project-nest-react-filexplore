@@ -2,12 +2,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootUrl } from "../filexplore/FileExploreApiSlice";
 
-//get all users
+//Register user
 export const getRegister = createAsyncThunk(
   "user/getRegister",
   async (data) => {
     try {
-      const response = await axios.post(`${RootUrl}/user/add`, data);
+      const response = await axios.post(`${RootUrl}/user/singup`, data);
 
       return response;
     } catch (error) {
@@ -15,3 +15,27 @@ export const getRegister = createAsyncThunk(
     }
   }
 );
+//Login user
+export const getLogin = createAsyncThunk("user/getLogin", async (data) => {
+  try {
+    const response = await axios.post(`${RootUrl}/auth/login`, data);
+
+    return response;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+});
+//Login user
+export const getMe = createAsyncThunk("user/getMe", async (data) => {
+  try {
+    const response = await axios.get(`${RootUrl}/auth/me`, {
+      headers: {
+        Authorization: "Bearer " + data,
+      },
+    });
+
+    return response;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+});

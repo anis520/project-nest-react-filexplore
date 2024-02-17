@@ -16,8 +16,8 @@ export class FileExploreController {
   constructor(private readonly fileExploreService: FileExploreService) {}
 
   @Get()
-  async findAll() {
-    const getdata = await this.fileExploreService.findAll();
+  async findAll(@Req() req: any) {
+    const getdata = await this.fileExploreService.findAll(req.user.userId);
 
     return getdata;
   }

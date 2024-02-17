@@ -1,4 +1,4 @@
-import { Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from 'src/user/entities/user.entity';
@@ -18,6 +18,19 @@ export class AuthController {
       role: user.role,
     };
 
-    return { token: this.jwtService.sign(payload) };
+    return { token: this.jwtService.sign(payload), user: payload };
+  }
+  @Get('/me')
+  me(@Req() req) {
+    // jwt token
+    const user: User = req.user;
+    const payload = {
+      username: user.username,
+      userId: user.id,
+      email: user.email,
+      role: user.role,
+    };
+
+    return { user: payload };
   }
 }

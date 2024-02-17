@@ -1,21 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import banner from "../../assets/banner4.jpg";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { getRegister } from "../../features/user/userApiSlice";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getLogin, getRegister } from "../../features/user/userApiSlice";
 import loginbanner from "../../assets/login.png";
+import { toast } from "react-toastify";
+import { getUserData, setMessageEmpty } from "../../features/user/userSlice";
 
 const Login = () => {
+  const { message, error } = useSelector(getUserData);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [input, setInput] = useState({
-    username: "ss",
-    email: "s@gmail.com",
-    password: "ss",
+    email: "",
+    password: "",
   });
 
-  const handleRegister = () => {
-    dispatch(getRegister(input));
+  const handleLogin = () => {
+    dispatch(getLogin(input));
   };
+
+  useEffect(() => {
+    if (message) {
+      navigate("/");
+      toast.success(message);
+    }
+    if (error) {
+      toast.error(error);
+    }
+    dispatch(setMessageEmpty());
+  }, [error, message, dispatch]);
+
   return (
     <div
       style={{ backgroundImage: `url(${banner})` }}
@@ -42,6 +57,11 @@ const Login = () => {
                 <input
                   type="email"
                   id="email"
+                  value={input.email}
+                  name="email"
+                  onChange={(e) =>
+                    setInput({ ...input, email: e.target.value })
+                  }
                   className="w-full border outline-none rounded-md py-1  px-2 text-gray-600 "
                   placeholder="Your email"
                 />{" "}
@@ -56,12 +76,17 @@ const Login = () => {
                 <input
                   id="password"
                   type="password"
+                  value={input.password}
+                  name="password"
+                  onChange={(e) =>
+                    setInput({ ...input, password: e.target.value })
+                  }
                   className="w-full border outline-none rounded-md py-1  px-2 text-gray-600 "
                   placeholder="Your password"
                 />{" "}
               </div>
               <button
-                onClick={handleRegister}
+                onClick={handleLogin}
                 className="w-full p-2 text-white bg-blue-500 rounded-md font-semibold"
               >
                 Login

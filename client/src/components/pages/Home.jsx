@@ -23,7 +23,10 @@ import {
 } from "react-icons/bs";
 import CreateFolder from "../Modals/CreateFolder";
 import { useDispatch, useSelector } from "react-redux";
-import { filesDelete } from "../../features/filexplore/FileExploreApiSlice";
+import {
+  filesDelete,
+  getAllFiles,
+} from "../../features/filexplore/FileExploreApiSlice";
 import UploadFile from "../Modals/UploadFile";
 import { deleteFile } from "../../firebase/services/AllService";
 import {
@@ -33,8 +36,13 @@ import {
   setRoot,
   setUnFavourite,
 } from "../../features/filexplore/FileExplore";
+import { toast } from "react-toastify";
+import { getUserData } from "../../features/user/userSlice";
 
 const Home = () => {
+  const { token } = useSelector(getUserData);
+
+  const [fullView, setFullView] = useState(null);
   const dispatch = useDispatch();
   const { allFiles, filterData, favourite, root } = useSelector(getFilesData);
 
@@ -42,7 +50,6 @@ const Home = () => {
   const [quick, setQuick] = useState(null);
   const [showCreateFolder, setShowCreateFolder] = useState(false);
   const [showUploadFile, setshowUploadFile] = useState(false);
-  console.log(quick);
   const handleOpenCreateModel = () => {
     setShowCreateFolder(true);
   };
@@ -62,6 +69,9 @@ const Home = () => {
   };
 
   const RootHandler = (data) => {
+    if (data.type == "picture" || data.type == "video") {
+      setFullView(data);
+    }
     dispatch(setRoot(data));
   };
 
@@ -80,9 +90,41 @@ const Home = () => {
       dispatch(setRoot({ parentId: null }));
     }
   };
+  const handleCloseFullView = () => {
+    handleBack();
+    setFullView(null);
+  };
+  useEffect(() => {
+    dispatch(getAllFiles(token));
+  }, []);
 
   return (
     <div className="w-10/12 h-screen overflow-y-auto  ">
+      {fullView && (
+        <div
+          id="view"
+          onClick={handleCloseFullView}
+          className="fixed flex items-center justify-center z-30 top-0 left-0  w-screen h-screen bg-gray-100 bg-opacity-50 backdrop-blur-sm "
+        >
+          {fullView.type == "picture" && (
+            <img
+              src={fullView.url}
+              className="w-7/12 border shadow-md  h-4/5 object-cover rounded-lg"
+              alt=""
+            />
+          )}
+          {fullView.type == "video" && (
+            <video
+              width="320"
+              height="240"
+              controls
+              className="w-7/12 border shadow-md  h-4/5 object-cover rounded-lg"
+            >
+              <source src={fullView.url} type="video/mp4" />
+            </video>
+          )}
+        </div>
+      )}
       {/* create folder model  */}
       <CreateFolder
         showCreateFolder={showCreateFolder}
