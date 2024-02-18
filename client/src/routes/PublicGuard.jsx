@@ -3,9 +3,9 @@ import { Navigate, Outlet } from "react-router-dom";
 import { getUserData } from "../features/user/userSlice";
 
 const PublicGard = () => {
-  const { token } = useSelector(getUserData);
+  const { user } = useSelector(getUserData);
 
-  if (!token) {
+  if (!user) {
     return <Outlet />;
   } else {
     return <Navigate to="/app" />;

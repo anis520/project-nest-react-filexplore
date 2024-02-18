@@ -21,6 +21,14 @@ export class FileExploreController {
 
     return getdata;
   }
+  @Get('/usedStorage')
+  async getUsedStorage(@Req() req: any) {
+    const getdata = await this.fileExploreService.getUsedStorage(
+      req.user.userId,
+    );
+
+    return getdata;
+  }
   @Post('/add')
   addNew(@Req() req: any, @Body() createFileExplore: CreateFileExploreDto) {
     return this.fileExploreService.add(createFileExplore, req.user.userId);

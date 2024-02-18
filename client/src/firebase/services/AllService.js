@@ -34,7 +34,7 @@ export const deleteFile = (link) => {
 };
 
 export function categorizeFileType(fileName) {
-  const photoExtensions = ["jpg", "png", "gif"]; // Add more photo extensions
+  const photoExtensions = ["jpg", "png", "gif", "jpeg"]; // Add more photo extensions
   const musicExtensions = ["mp3", "wav", "ogg"]; // Add more music extensions
   const videoExtensions = ["mp4", "avi", "mov", "mkv"]; // Add more video extensions
   const documentExtensions = ["pdf", "docx", "txt", "xls"]; // Add more document extensions

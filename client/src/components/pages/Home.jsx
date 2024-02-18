@@ -12,6 +12,7 @@ import {
   FcSearch,
   FcVideoFile,
 } from "react-icons/fc";
+import emptyItemgif from "../../../public/empty.gif";
 
 import {
   BsFolderPlus,
@@ -26,6 +27,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   filesDelete,
   getAllFiles,
+  getusedStorage,
 } from "../../features/filexplore/FileExploreApiSlice";
 import UploadFile from "../Modals/UploadFile";
 import { deleteFile } from "../../firebase/services/AllService";
@@ -96,6 +98,7 @@ const Home = () => {
   };
   useEffect(() => {
     dispatch(getAllFiles(token));
+    dispatch(getusedStorage(token));
   }, []);
 
   return (
@@ -266,7 +269,11 @@ const Home = () => {
               </div>
 
               {item.type == "picture" && (
-                <img src={item.url} className="w-10 h-10 " alt="" />
+                <img
+                  src={item.url}
+                  className="w-10 h-10  object-cover"
+                  alt=""
+                />
               )}
               {item.type == "folder" && (
                 <FcOpenedFolder
@@ -293,6 +300,11 @@ const Home = () => {
             </div>
           );
         })}
+        {filterData?.length <= 0 && (
+          <div className="flex items-center justify-center h-full w-full">
+            <img src={emptyItemgif} className="w-5/12 mx-auto   " />
+          </div>
+        )}
 
         {/* single folder  */}
       </div>

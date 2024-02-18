@@ -15,8 +15,6 @@ export class FileExploreService {
   ) {}
 
   findAll(userId: any): Promise<FileExplore[]> {
-    console.log(userId);
-
     return this.FileExploreRepository.find({
       relations: ['user'],
       where: { user: { id: userId } },
@@ -43,5 +41,13 @@ export class FileExploreService {
     const deltedData = this.FileExploreRepository.findOne({ where: { id } });
     this.FileExploreRepository.delete(id);
     return deltedData;
+  }
+  async getUsedStorage(userId: any) {
+    const data = await this.FileExploreRepository.find({
+      relations: ['user'],
+      where: { user: { id: userId } },
+    });
+    const result = data.reduce((total, obj) => total + obj.size, 0);
+    return result;
   }
 }

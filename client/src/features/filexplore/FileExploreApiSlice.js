@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const RootUrl = "http://localhost:3001";
 
-//get all users
+//get all files
 export const getAllFiles = createAsyncThunk(
   "FileExplore/getAllFiles",
   async (data) => {
@@ -21,8 +21,25 @@ export const getAllFiles = createAsyncThunk(
     }
   }
 );
+//get total size
+export const getusedStorage = createAsyncThunk(
+  "FileExplore/getusedStorage",
+  async (data) => {
+    try {
+      const response = await axios.get(RootUrl + "/usedStorage", {
+        headers: {
+          Authorization: "Bearer " + data,
+        },
+      });
 
-// add new user
+      return response;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+    }
+  }
+);
+
+// add new file
 export const filesAdd = createAsyncThunk(
   "FileExplore/filesAdd",
   async (data) => {
@@ -61,7 +78,11 @@ export const filesDelete = createAsyncThunk(
   "FileExplore/filesDelete",
   async (id) => {
     try {
-      const response = await axios.delete(`${RootUrl}/remove/${id}`);
+      const response = await axios.delete(`${RootUrl}/remove/${id}`, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
 
       return response;
     } catch (error) {

@@ -8,11 +8,15 @@ import {
   filesAdd,
   filesUpdate,
 } from "../../features/filexplore/FileExploreApiSlice";
-import { getFilesData } from "../../features/filexplore/FileExplore";
+import {
+  getFilesData,
+  setLoading,
+} from "../../features/filexplore/FileExplore";
+import { toast } from "react-toastify";
 
 const UploadFile = ({ showUploadFile, setshowUploadFile }) => {
   const [file, setfile] = useState(null);
-  const { root } = useSelector(getFilesData);
+  const { root, size } = useSelector(getFilesData);
   const dispatch = useDispatch();
   const [input, setInput] = useState("");
   const handleCloseCreateFolderModal = () => {
@@ -20,6 +24,11 @@ const UploadFile = ({ showUploadFile, setshowUploadFile }) => {
   };
 
   const handleCreateFolder = async () => {
+    dispatch(setLoading());
+    if (size > 95) {
+      setshowUploadFile(false);
+      return toast.warn("Storage almost fulled");
+    }
     setshowUploadFile(false);
     const fileinfo = await uploadFileWithlink(file);
 

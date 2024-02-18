@@ -17,11 +17,13 @@ import { useDispatch, useSelector } from "react-redux";
 import Home from "../pages/Home";
 import { Outlet, useNavigate } from "react-router-dom";
 import { setLogout } from "../../features/user/userSlice";
+import Processinggif from "../../../public/Processing.gif";
 
 const RootLayout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { allFiles, favourite, filterData } = useSelector(getFilesData);
+  const { allFiles, favourite, filterData, size, loading } =
+    useSelector(getFilesData);
 
   const [quick, setQuick] = useState(null);
   const [showCreateFolder, setShowCreateFolder] = useState(false);
@@ -35,6 +37,7 @@ const RootLayout = () => {
   };
   const RootHomeHandler = () => {
     dispatch(setRoot({ parentId: null }));
+    setQuick(null);
   };
   const handleLogout = () => {
     RootHomeHandler();
@@ -66,10 +69,10 @@ const RootLayout = () => {
               return (
                 <p
                   className={`hover:bg-slate-200
-             px-4 py-1 cursor-pointer rounded-md`}
+             px-4 py-1 cursor-pointer rounded-md font-semibold text-xs`}
                   key={item.id}
                 >
-                  {item.title.slice(0, 12)}
+                  {item.title.slice(-12)}
                 </p>
               );
             })}{" "}
@@ -127,12 +130,13 @@ const RootLayout = () => {
               </p>
               <div className="w-full h-3 bg-slate-300 rounded-md p-[2px]">
                 <div
-                  className={`h-full w-[22%]
+                  style={{ width: `${size}%` }}
+                  className={`h-full duration-300
                   } bg-green-500 rounded-md`}
                 ></div>
               </div>
               <p className="font-semibold text-slate-500 text-xs ">
-                21 mb of 100 mb used
+                {size} mb of 100 mb used
               </p>
             </div>
           </div>
@@ -142,6 +146,14 @@ const RootLayout = () => {
           >
             Logout
           </button>
+          {loading && (
+            <div className="w-screen h-screen z-30 bg-black bg-opacity-50 fixed top-0 left-0">
+              <img
+                src={Processinggif}
+                className="w-[150px]  absolute bg-white rounded-3xl bottom-3 left-3"
+              />
+            </div>
+          )}
         </div>
         {/* sidebar  */}
 

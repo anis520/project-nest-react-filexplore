@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { filesAdd, filesDelete, filesUpdate } from "./FileExploreApiSlice";
+import {
+  filesAdd,
+  filesDelete,
+  filesUpdate,
+  getusedStorage,
+} from "./FileExploreApiSlice";
 import { getAllFiles } from "./FileExploreApiSlice";
 
 //create todo slice
@@ -9,6 +14,7 @@ const fileExplore = createSlice({
   initialState: {
     allFiles: null,
     filterData: null,
+    size: null,
     favourite: [],
     root: JSON.parse(localStorage.getItem("root"))
       ? JSON.parse(localStorage.getItem("root"))
@@ -31,6 +37,11 @@ const fileExplore = createSlice({
     },
     setQuickTab: (state, action) => {
       state.filterData = action.payload;
+      state.root = null;
+      localStorage.setItem("root", JSON.stringify(null));
+    },
+    setLoading: (state, action) => {
+      state.loading = true;
     },
     setFavourite: (state, action) => {
       state.favourite.push(action.payload);
@@ -64,6 +75,7 @@ const fileExplore = createSlice({
       (state.loading = false),
         state.allFiles.push(action.payload.data),
         state.filterData.push(action.payload.data);
+      state.size = state.size + action.payload.data.size;
     });
     builder.addCase(filesAdd.rejected, (state, action) => {
       state.loading = false;
@@ -93,10 +105,14 @@ const fileExplore = createSlice({
       state.filterData = state.filterData.filter(
         (i) => i.id !== action.payload.data.id
       );
+      state.size = state.size - action.payload.data.size;
       state.loading = false;
     });
     builder.addCase(filesDelete.rejected, (state, action) => {
       state.loading = false;
+    });
+    builder.addCase(getusedStorage.fulfilled, (state, action) => {
+      state.size = action.payload.data;
     });
   },
 });
@@ -112,6 +128,7 @@ export const {
   setFavourite,
   setUnFavourite,
   setRoot,
+  setLoading,
 } = fileExplore.actions;
 // slice
 export default fileExplore.reducer;
