@@ -22,7 +22,7 @@ import Processinggif from "../../../public/Processing.gif";
 const RootLayout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { allFiles, favourite, filterData, size, loading } =
+  const { allFiles, favourite, filterData, size, fileUploadLoading } =
     useSelector(getFilesData);
 
   const [quick, setQuick] = useState(null);
@@ -146,7 +146,7 @@ const RootLayout = () => {
           >
             Logout
           </button>
-          {loading && (
+          {fileUploadLoading && (
             <div className="w-screen h-screen z-30 bg-black bg-opacity-50 fixed top-0 left-0">
               <img
                 src={Processinggif}

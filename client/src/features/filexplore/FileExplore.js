@@ -22,6 +22,7 @@ const fileExplore = createSlice({
     message: null,
     error: null,
     loading: false,
+    fileUploadLoading: false,
   },
   reducers: {
     setMessageEmpty: (state) => {
@@ -41,7 +42,7 @@ const fileExplore = createSlice({
       localStorage.setItem("root", JSON.stringify(null));
     },
     setLoading: (state, action) => {
-      state.loading = true;
+      state.fileUploadLoading = true;
     },
     setFavourite: (state, action) => {
       state.favourite.push(action.payload);
@@ -69,16 +70,16 @@ const fileExplore = createSlice({
     });
     // add new file
     builder.addCase(filesAdd.pending, (state, action) => {
-      state.loading = true;
+      state.fileUploadLoading = true;
     });
     builder.addCase(filesAdd.fulfilled, (state, action) => {
-      (state.loading = false),
+      (state.fileUploadLoading = false),
         state.allFiles.push(action.payload.data),
         state.filterData.push(action.payload.data);
       state.size = state.size + action.payload.data.size;
     });
     builder.addCase(filesAdd.rejected, (state, action) => {
-      state.loading = false;
+      state.fileUploadLoading = false;
     });
     // update  file
     builder.addCase(filesUpdate.pending, (state, action) => {
