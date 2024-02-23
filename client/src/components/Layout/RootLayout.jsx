@@ -23,7 +23,7 @@ import cn from "../../utils/cn";
 const RootLayout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { allFiles, favourite, filterData, size, fileUploadLoading } =
+  const { allFiles, filterData, size, fileUploadLoading } =
     useSelector(getFilesData);
 
   const [quick, setQuick] = useState(null);
@@ -58,25 +58,14 @@ const RootLayout = () => {
             </p>
           </div>
           <div className="py-2 mt-5 ">
-            <p
+            {/* <p
               className="px-4
            text-sm font-semibold text-zinc-600 flex justify-between items-center gap-2 mb-2"
             >
               <span>Favourite</span>{" "}
               <BsFillStarFill className="text-yellow-400 " />
             </p>
-            <hr />
-            {favourite?.map((item) => {
-              return (
-                <p
-                  className={`hover:bg-slate-200
-             px-4 py-1 cursor-pointer rounded-md font-semibold text-xs`}
-                  key={item.id}
-                >
-                  {item.title.slice(-12)}
-                </p>
-              );
-            })}{" "}
+            <hr /> */}
             <p className="mt-8 px-4 text-sm font-semibold text-zinc-600 flex items-center justify-between gap-2 mb-2">
               <span>Quick</span> <FcLowPriority />
             </p>{" "}
@@ -155,11 +144,20 @@ const RootLayout = () => {
             Logout
           </button>
           {fileUploadLoading && (
-            <div className="w-screen h-screen z-30 bg-black bg-opacity-50 fixed top-0 left-0">
-              <img
-                src={Processinggif}
-                className="w-[150px]  absolute bg-white rounded-3xl bottom-3 left-3"
-              />
+            // <div className="w-screen h-screen z-30 bg-black bg-opacity-50 fixed top-0 left-0">
+            //   <img
+            //     src={Processinggif}
+            //     className="w-[150px]  absolute bg-white rounded-3xl bottom-3 left-3"
+            //   />
+            // </div>
+
+            <div className="fixed bottom-5 left-5 z-30 p-5 w-44   shadow-md bg-white border rounded-md">
+              <div
+                className={cn(
+                  "absolute bottom-0 left-0 duration-500 ease-linear w-4/12 p-1 bg-blue-500 border  rounded-md",
+                  { "w-full": !fileUploadLoading }
+                )}
+              ></div>
             </div>
           )}
         </div>

@@ -13,6 +13,7 @@ import {
   FcVideoFile,
 } from "react-icons/fc";
 import emptyItemgif from "../../../public/empty.gif";
+import { FaFile, FaFolder } from "react-icons/fa";
 
 import {
   BsFolderPlus,
@@ -33,10 +34,8 @@ import UploadFile from "../Modals/UploadFile";
 import { deleteFile } from "../../firebase/services/AllService";
 import {
   getFilesData,
-  setFavourite,
   setQuickTab,
   setRoot,
-  setUnFavourite,
 } from "../../features/filexplore/FileExplore";
 import { toast } from "react-toastify";
 import { getUserData } from "../../features/user/userSlice";
@@ -47,7 +46,7 @@ const Home = () => {
 
   const [fullView, setFullView] = useState(null);
   const dispatch = useDispatch();
-  const { allFiles, filterData, favourite, root, size } =
+  const { allFiles, filterData, loading, root, size } =
     useSelector(getFilesData);
 
   const [view, setview] = useState(true);
@@ -79,9 +78,6 @@ const Home = () => {
     dispatch(setRoot(data));
   };
 
-  const handleFavorite = (data) => {
-    dispatch(setFavourite(data));
-  };
   const handleUnFavorite = (data) => {
     dispatch(setUnFavourite(data));
   };
@@ -248,22 +244,6 @@ const Home = () => {
                       Rename
                     </li>
 
-                    {favourite?.includes(item) ? (
-                      <li
-                        onClick={() => handleUnFavorite(item)}
-                        className="hover:bg-zinc-100 px-3 rounded-md"
-                      >
-                        Unfavourite
-                      </li>
-                    ) : (
-                      <li
-                        onClick={() => handleFavorite(item)}
-                        className="hover:bg-zinc-100 px-3 rounded-md"
-                      >
-                        Favourite
-                      </li>
-                    )}
-
                     <li
                       onClick={() => handleDelete(item)}
                       className="hover:bg-zinc-100 px-3 rounded-md"
@@ -309,6 +289,19 @@ const Home = () => {
         {filterData?.length <= 0 && (
           <div className="flex items-center justify-center h-full w-full">
             <img src={emptyItemgif} className="w-5/12 mx-auto   " />
+          </div>
+        )}
+
+        {loading && (
+          <div className="flex gap-6 py-5 items-end">
+            <FaFolder className="animate-pulse text-amber-500 text-4xl" />
+            <FaFile className="animate-pulse text-blue-400 mb-1 text-4xl" />
+            <FaFolder className="animate-pulse text-amber-500 text-4xl" />
+            <FaFile className="animate-pulse text-blue-400 mb-1 text-4xl" />
+            <FaFile className="animate-pulse text-blue-400 mb-1 text-4xl" />
+            <FaFolder className="animate-pulse text-amber-500 text-4xl" />
+            <FaFolder className="animate-pulse text-amber-500 text-4xl" />
+            <FaFolder className="animate-pulse text-amber-500 text-4xl" />
           </div>
         )}
 

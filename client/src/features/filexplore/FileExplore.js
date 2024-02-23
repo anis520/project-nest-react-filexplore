@@ -44,15 +44,6 @@ const fileExplore = createSlice({
     setLoading: (state, action) => {
       state.fileUploadLoading = true;
     },
-
-    setFavourite: (state, action) => {
-      state.favourite.push(action.payload);
-    },
-    setUnFavourite: (state, action) => {
-      state.favourite = state.favourite.filter(
-        (i) => i.id !== action.payload.id
-      );
-    },
   },
   extraReducers: (builder) => {
     // get all files
@@ -95,6 +86,7 @@ const fileExplore = createSlice({
     });
     builder.addCase(filesUpdate.rejected, (state, action) => {
       state.loading = false;
+      state.fileUploadLoading = false;
     });
 
     // delete  file
@@ -128,8 +120,7 @@ export const getFilesData = (state) => state.fileExplore;
 export const {
   setMessageEmpty,
   setQuickTab,
-  setFavourite,
-  setUnFavourite,
+
   setRoot,
   setLoading,
 } = fileExplore.actions;
