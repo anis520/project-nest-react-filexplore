@@ -30,7 +30,7 @@ export const getMe = createAsyncThunk("user/getMe", async (data) => {
   try {
     const response = await axios.get(`${RootUrl}/auth/me`, {
       headers: {
-        Authorization: "Bearer " + data,
+        Authorization: "Bearer " + localStorage.getItem("token"),
       },
     });
 

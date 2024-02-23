@@ -15,6 +15,7 @@ import { AuthModule } from './auth/auth.module';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
+        // type: 'mysql',
         host: configService.get('DATABASE_HOST'),
         port: configService.get<number>('DATABASE_PORT'),
         username: configService.get('DATABASE_USERNAME'),
@@ -34,25 +35,3 @@ import { AuthModule } from './auth/auth.module';
   exports: [],
 })
 export class AppModule {}
-
-// @Module({
-//   imports: [
-//     TypeOrmModule.forRoot({
-//       type: 'mysql',
-//       host: 'localhost',
-//       port: 3306,
-//       username: 'root',
-//       password: '',
-//       database: 'appsql',
-//       synchronize: true,
-//       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-//       // logging: true,
-//     }),
-//     UserModule,
-//     FileExploreModule,
-//     AuthModule,
-//   ],
-//   controllers: [AppController],
-//   providers: [PassportLocalStrategy],
-//   exports: [],
-// })

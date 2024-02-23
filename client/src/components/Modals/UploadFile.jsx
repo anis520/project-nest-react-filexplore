@@ -27,6 +27,7 @@ const UploadFile = ({ showUploadFile, setshowUploadFile }) => {
     dispatch(setLoading());
     if (size > 95) {
       setshowUploadFile(false);
+
       return toast.warn("Storage almost fulled");
     }
     setshowUploadFile(false);

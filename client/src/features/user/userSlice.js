@@ -62,6 +62,8 @@ const user = createSlice({
       state.loading = false;
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      state.token = null;
+      state.user = null;
       state.error = action.error.message;
     });
   },

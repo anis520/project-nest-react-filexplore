@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateFileExploreDto } from './dto/create-FileExplore.dto';
 import { FileExplore } from './entities/fileExplore.entity';
+import generateRandomText from 'src/utils/rendomText';
 
 @Injectable()
 export class FileExploreService {
@@ -25,9 +26,19 @@ export class FileExploreService {
     fileExploreDto: CreateFileExploreDto,
     userId: number,
   ): Promise<FileExplore> {
+    const findexist = await this.FileExploreRepository.findOne({
+      where: { parentId: fileExploreDto.parentId, title: fileExploreDto.title },
+    });
+    console.log(findexist);
+
     const fileExplore: FileExplore = new FileExplore();
 
-    fileExplore.title = fileExploreDto.title;
+    if (findexist) {
+      const rendomtext = generateRandomText(5);
+      fileExplore.title = rendomtext + findexist.title;
+    } else {
+      fileExplore.title = fileExploreDto.title;
+    }
     fileExplore.type = fileExploreDto.type;
     fileExplore.ext = fileExploreDto.ext;
     fileExplore.parentId = fileExploreDto.parentId;

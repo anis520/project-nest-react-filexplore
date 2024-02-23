@@ -44,6 +44,7 @@ const fileExplore = createSlice({
     setLoading: (state, action) => {
       state.fileUploadLoading = true;
     },
+
     setFavourite: (state, action) => {
       state.favourite.push(action.payload);
     },
@@ -80,6 +81,7 @@ const fileExplore = createSlice({
     });
     builder.addCase(filesAdd.rejected, (state, action) => {
       state.fileUploadLoading = false;
+      state.error = action.error.message;
     });
     // update  file
     builder.addCase(filesUpdate.pending, (state, action) => {

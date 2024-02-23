@@ -40,13 +40,15 @@ import {
 } from "../../features/filexplore/FileExplore";
 import { toast } from "react-toastify";
 import { getUserData } from "../../features/user/userSlice";
+import cn from "../../utils/cn";
 
 const Home = () => {
   const { token } = useSelector(getUserData);
 
   const [fullView, setFullView] = useState(null);
   const dispatch = useDispatch();
-  const { allFiles, filterData, favourite, root } = useSelector(getFilesData);
+  const { allFiles, filterData, favourite, root, size } =
+    useSelector(getFilesData);
 
   const [view, setview] = useState(true);
   const [quick, setQuick] = useState(null);
@@ -177,14 +179,18 @@ const Home = () => {
         <div className="flex items-center px-4 gap-3">
           {/* file upload  and new folder  */}
           <button
+            disabled={size > 95}
             onClick={handleOpenUploadFileMOdel}
-            className="flex items-center gap-2 bg-zinc-200 text-zinc-600 px-2 py-1 rounded-md font-semibold text-sm"
+            className={cn(
+              "duration-300 flex items-center gap-2 bg-zinc-200 text-zinc-600 px-2 py-1 rounded-md font-semibold text-sm",
+              { "opacity-70 cursor-not-allowed": size > 95 }
+            )}
           >
             <BsUpload /> Upload File
           </button>
           <button
             onClick={handleOpenCreateModel}
-            className="flex items-center gap-2 bg-zinc-200 text-zinc-600 px-2 py-1 rounded-md font-semibold text-sm"
+            className=" flex items-center gap-2 bg-zinc-200 text-zinc-600 px-2 py-1 rounded-md font-semibold text-sm"
           >
             <BsFolderPlus /> New folder
           </button>

@@ -9,7 +9,6 @@ export const getAllFiles = createAsyncThunk(
   "FileExplore/getAllFiles",
   async (data) => {
     try {
-      console.log(data);
       const response = await axios.get(RootUrl, {
         headers: {
           Authorization: "Bearer " + data,

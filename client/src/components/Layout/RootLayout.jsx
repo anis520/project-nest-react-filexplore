@@ -18,6 +18,7 @@ import Home from "../pages/Home";
 import { Outlet, useNavigate } from "react-router-dom";
 import { setLogout } from "../../features/user/userSlice";
 import Processinggif from "../../../public/Processing.gif";
+import cn from "../../utils/cn";
 
 const RootLayout = () => {
   const dispatch = useDispatch();
@@ -130,13 +131,20 @@ const RootLayout = () => {
               </p>
               <div className="w-full h-3 bg-slate-300 rounded-md p-[2px]">
                 <div
-                  style={{ width: `${size}%` }}
-                  className={`h-full duration-300
-                  } bg-green-500 rounded-md`}
+                  style={{ width: `${size}%`, maxWidth: "100%" }}
+                  className={cn(
+                    `h-full duration-300
+                  } bg-green-500 rounded-md`,
+                    { "bg-red-400": size > 95 }
+                  )}
                 ></div>
               </div>
               <p className="font-semibold text-slate-500 text-xs ">
-                {size} mb of 100 mb used
+                {size < 95 ? (
+                  size + " mb of 100 mb used"
+                ) : (
+                  <p className="text-red-500">Storage fulled !</p>
+                )}
               </p>
             </div>
           </div>
