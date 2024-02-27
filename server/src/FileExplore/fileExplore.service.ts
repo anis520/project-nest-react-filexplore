@@ -27,15 +27,20 @@ export class FileExploreService {
     userId: number,
   ): Promise<FileExplore> {
     const findexist = await this.FileExploreRepository.findOne({
-      where: { parentId: fileExploreDto.parentId, title: fileExploreDto.title },
+      relations: ['user'],
+      where: {
+        parentId: fileExploreDto.parentId,
+        title: fileExploreDto.title,
+        user: { id: userId },
+      },
     });
     console.log(findexist);
 
     const fileExplore: FileExplore = new FileExplore();
 
     if (findexist) {
-      const rendomtext = generateRandomText(5);
-      fileExplore.title = rendomtext + findexist.title;
+      const rendomtext = generateRandomText(fileExploreDto.title);
+      fileExplore.title = rendomtext;
     } else {
       fileExplore.title = fileExploreDto.title;
     }
