@@ -90,9 +90,9 @@ const fileExplore = createSlice({
     });
 
     // delete  file
-    builder.addCase(filesDelete.pending, (state, action) => {
-      state.loading = true;
-    });
+    // builder.addCase(filesDelete.pending, (state, action) => {
+    //   state.loading = true;
+    // });
     builder.addCase(filesDelete.fulfilled, (state, action) => {
       state.allFiles = state.allFiles.filter(
         (i) => i.id !== action.payload.data.id

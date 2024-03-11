@@ -1,4 +1,3 @@
-import RootLayout from "../components/Layout/RootLayout";
 import Home from "../components/pages/Home";
 import Login from "../components/pages/Login";
 import Register from "../components/pages/Register";

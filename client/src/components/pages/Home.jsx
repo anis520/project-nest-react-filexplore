@@ -78,10 +78,6 @@ const Home = () => {
     dispatch(setRoot(data));
   };
 
-  const handleUnFavorite = (data) => {
-    dispatch(setUnFavourite(data));
-  };
-
   const handleBack = () => {
     let get = allFiles.find((i) => i.id == root.parentId);
     if (get) {
@@ -100,7 +96,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="w-10/12 h-screen overflow-y-auto  ">
+    <div className="w-full md:w-10/12 h-screen  overflow-y-auto  ">
       {fullView && (
         <div
           id="view"
@@ -228,12 +224,12 @@ const Home = () => {
             <div
               key={item.id}
               onDoubleClick={() => RootHandler(item)}
-              className={`relative   bg-zinc-100 hover:bg-zinc-200  duration-75 flex  ${
-                view ? "flex-row border pe-20" : " flex-col"
+              className={`relative    bg-zinc-100 hover:bg-zinc-200  duration-75 flex  ${
+                view ? "flex-row border  pe-20 " : " flex-col h-36"
               }   items-center justify-between h-fit  p-1 rounded-lg    duration-300 `}
             >
               <div
-                className={`absolute   cursor-pointer   ${
+                className={`absolute    cursor-pointer   ${
                   view ? " top-4 right-10" : "  top-1 right-2"
                 } group`}
               >
@@ -257,7 +253,9 @@ const Home = () => {
               {item.type == "picture" && (
                 <img
                   src={item.url}
-                  className="w-10 h-10  object-cover"
+                  className={` object-cover ${
+                    view ? "w-10 h-10" : " w-20 h-20"
+                  }`}
                   alt=""
                 />
               )}
@@ -280,7 +278,14 @@ const Home = () => {
                 />
               )}
 
-              <p className="text-sm font-semibold text-zinc-500">
+              <p
+                className={cn(
+                  "text-[10px] w-full overflow-hidden p-1  font-semibold text-zinc-500",
+                  {
+                    "text-xs": view,
+                  }
+                )}
+              >
                 {item.title}
               </p>
             </div>

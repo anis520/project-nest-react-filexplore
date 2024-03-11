@@ -6,6 +6,7 @@ import {
   FcApproval,
   FcFolder,
   FcLowPriority,
+  FcMenu,
 } from "react-icons/fc";
 import { BsFillStarFill } from "react-icons/bs";
 import {
@@ -20,13 +21,14 @@ import { setLogout } from "../../features/user/userSlice";
 import Processinggif from "../../../public/Processing.gif";
 import cn from "../../utils/cn";
 
-const RootLayout = () => {
+const AppRootLayout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { allFiles, filterData, size, fileUploadLoading } =
     useSelector(getFilesData);
 
   const [quick, setQuick] = useState(null);
+  const [naber, setNavbar] = useState(false);
   const [showCreateFolder, setShowCreateFolder] = useState(false);
   const [showUploadFile, setshowUploadFile] = useState(false);
 
@@ -50,7 +52,14 @@ const RootLayout = () => {
     <>
       <div className="flex blockCopy">
         {/* sidebar */}
-        <div className="w-2/12 p-3 bg-zinc-100 h-screen border-r">
+
+        <div
+          onClick={() => setNavbar(!naber)}
+          className={cn(
+            "fixed md:relative top-0 left-0 duration-300 w-8/12 md:w-2/12 p-3 bg-zinc-100 h-screen border-r z-30",
+            { "ml-[100%] md:ml-0 md:block": !naber }
+          )}
+        >
           <div onClick={RootHomeHandler} className="">
             <p className="p-2 flex items-center gap-2   duration-300 cursor-pointer rounded-lg">
               <FcFolder className="h-8 w-8 " />{" "}
@@ -160,6 +169,17 @@ const RootLayout = () => {
               ></div>
             </div>
           )}
+          <button
+            onClick={() => setNavbar(!naber)}
+            className={cn(
+              " md:hidden fixed text-white rounded-md   bottom-2  right-2 p-2 bg-blue-400  h-fit ",
+              {
+                // "fixed bottom-0 right-0 ": !naber,
+              }
+            )}
+          >
+            <FcMenu size={28} className="border rounded-sm" />
+          </button>
         </div>
         {/* sidebar  */}
 
@@ -169,4 +189,4 @@ const RootLayout = () => {
   );
 };
 
-export default RootLayout;
+export default AppRootLayout;

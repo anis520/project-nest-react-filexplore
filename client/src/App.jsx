@@ -8,7 +8,6 @@ import { RouterProvider } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Home from "./components/pages/Home";
 import { getAllFiles } from "./features/filexplore/FileExploreApiSlice";
-import RootLayout from "./components/Layout/RootLayout";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getUserData } from "./features/user/userSlice";
