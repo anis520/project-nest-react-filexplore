@@ -64,12 +64,12 @@ const Home = () => {
     deleteFile(data.url);
   };
 
-  const handleQuick = (type) => {
-    const item = allFiles.filter((item) => item.type === type);
+  // const handleQuick = (type) => {
+  //   const item = allFiles.filter((item) => item.type === type);
 
-    dispatch(setQuickTab(item));
-    setQuick(type);
-  };
+  //   dispatch(setQuickTab(item));
+  //   setQuick(type);
+  // };
 
   const RootHandler = (data) => {
     if (data.type == "picture" || data.type == "video") {
@@ -80,6 +80,14 @@ const Home = () => {
 
   const handleBack = () => {
     let get = allFiles.find((i) => i.id == root.parentId);
+    if (get) {
+      dispatch(setRoot(get));
+    } else {
+      dispatch(setRoot({ parentId: null }));
+    }
+  };
+  const handleNext = () => {
+    let get = allFiles.find((i) => i.parentId == root.id);
     if (get) {
       dispatch(setRoot(get));
     } else {
@@ -141,14 +149,20 @@ const Home = () => {
               onClick={handleBack}
               className="hover:bg-zinc-200 h-6 w-6 rounded-md duration-300 cursor-pointer p-1"
             />
-            <FcNext className="hover:bg-zinc-200 h-6 w-6 rounded-md duration-300 cursor-pointer p-1" />
+            <FcNext
+              onClick={handleNext}
+              className="hover:bg-zinc-200 h-6 w-6 rounded-md duration-300 cursor-pointer p-1"
+            />
           </div>
           {/* button  */}
 
           {/* button  */}
 
           <div className="flex items-center w-full border rounded-full px-3 py-1 gap-1">
-            <FcHome className="" />
+            <FcHome
+              onClick={() => RootHandler({ parentId: null })}
+              className="cursor-pointer"
+            />
             <FcNext />
             <p className="font-semibold text-sm">{root?.title}</p>
 
@@ -224,7 +238,7 @@ const Home = () => {
             <div
               key={item.id}
               onDoubleClick={() => RootHandler(item)}
-              className={`relative    bg-zinc-100 hover:bg-zinc-200  duration-75 flex  ${
+              className={`relative  cursor-pointer   bg-zinc-100 hover:bg-zinc-200  duration-75 flex  ${
                 view ? "flex-row border  pe-20 " : " flex-col h-36"
               }   items-center justify-between h-fit  p-1 rounded-lg    duration-300 `}
             >
@@ -286,7 +300,7 @@ const Home = () => {
                   }
                 )}
               >
-                {item.title}
+                {item.title.slice(-15)}
               </p>
             </div>
           );

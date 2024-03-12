@@ -19,6 +19,7 @@ const user = createSlice({
     setLogout: () => {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      localStorage.removeItem("root");
     },
   },
   extraReducers: (builder) => {

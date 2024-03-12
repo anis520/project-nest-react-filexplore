@@ -20,6 +20,7 @@ const fileExplore = createSlice({
       ? JSON.parse(localStorage.getItem("root"))
       : { id: null },
     message: null,
+
     error: null,
     loading: false,
     fileUploadLoading: false,
