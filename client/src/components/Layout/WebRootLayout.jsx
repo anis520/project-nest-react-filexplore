@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../website/Header";
 import { Outlet } from "react-router-dom";
 import Fotter from "../website/Fotter";
+import { useEffect } from "react";
 
 const WebRootLayout = () => {
   return (

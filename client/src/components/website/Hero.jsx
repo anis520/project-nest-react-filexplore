@@ -5,8 +5,8 @@ import ContainerDiv from "./containerDiv/containerDiv";
 const Hero = () => {
   return (
     <ContainerDiv>
-      <div className="flex py-28 ">
-        <div className="w-6/12 space-y-3">
+      <div className="flex flex-col gap-8 md:flex-row py-28 ">
+        <div className="md:w-6/12 space-y-3 order-1 md:order-2">
           <p className="text-5xl font-bold leading-tight text-slate-800 ">
             Optimize your file more <br /> structured and <br /> organized
           </p>
@@ -25,7 +25,10 @@ const Hero = () => {
             </button>
           </div>
         </div>
-        <img className="w-6/12 h-[300px] object-cover" src={hero} />
+        <img
+          className="md:w-6/12 h-[300px] object-cover order-2 md:order-1"
+          src={hero}
+        />
       </div>{" "}
     </ContainerDiv>
   );

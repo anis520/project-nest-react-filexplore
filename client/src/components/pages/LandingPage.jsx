@@ -19,6 +19,7 @@ import {
 import Header from "../website/Header";
 import Hero from "../website/Hero";
 import Features from "../website/Features";
+import Pricing from "../website/Pricing";
 
 const LandingPage = () => {
   return (
@@ -27,6 +28,8 @@ const LandingPage = () => {
       <Hero />
       {/* <=====================features=====================> */}
       <Features />
+      {/* <====================Pricing=====================> */}
+      <Pricing />
     </div>
   );
 };
