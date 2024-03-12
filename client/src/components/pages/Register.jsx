@@ -52,9 +52,9 @@ const Register = () => {
         // style={{ backgroundImage: `url(${banner})` }}
         className=" h-screen    bg-gradient-to-b from-indigo-400 to-cyan-400"
       >
-        <div className="   w-full  h-full  flex items-center justify-center p-10 md:p-0 ">
-          <div className=" w-11/12  md:w-7/12 p-6 bg-white rounded-md flex flex-col md:flex-row gap-5 ">
-            <div className="md:w-6/12 p-5   ">
+        <div className="   w-full  h-full  flex items-center justify-center p-5 md:p-0 ">
+          <div className="   md:w-7/12 p-6 bg-white rounded-md flex flex-col md:flex-row gap-5 ">
+            <div className="md:w-6/12  md:p-5   ">
               <h3 className="text-gray-700 font-semibold text-2xl">
                 Get Started
               </h3>
