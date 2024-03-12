@@ -89,7 +89,9 @@ const Home = () => {
   const handleNext = () => {
     let get = allFiles.find((i) => i.parentId == root.id);
     if (get) {
-      dispatch(setRoot(get));
+      if (get.type == "folder") {
+        dispatch(setRoot(get));
+      }
     } else {
       dispatch(setRoot({ parentId: null }));
     }
