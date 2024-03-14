@@ -60,8 +60,20 @@ const Home = () => {
     setshowUploadFile(true);
   };
   const handleDelete = (data) => {
-    dispatch(filesDelete(data.id));
-    deleteFile(data.url);
+    let parent = data;
+    for (let index = 0; index < allFiles.length; index++) {
+      parent = allFiles.find((i) => i.parentId == parent.id);
+
+      if (parent) {
+        dispatch(filesDelete(parent.id));
+
+        !parent.type == "folder" && deleteFile(parent.url);
+      } else {
+        dispatch(filesDelete(data.id));
+
+        !data.type == "folder" && deleteFile(data.url);
+      }
+    }
   };
 
   // const handleQuick = (type) => {
@@ -93,7 +105,7 @@ const Home = () => {
         dispatch(setRoot(get));
       }
     } else {
-      dispatch(setRoot({ parentId: null }));
+      // dispatch(setRoot({ parentId: null }));
     }
   };
   const handleCloseFullView = () => {
@@ -307,11 +319,6 @@ const Home = () => {
             </div>
           );
         })}
-        {filterData?.length <= 0 && (
-          <div className="flex items-center justify-center h-full w-full">
-            <img src={emptyItemgif} className="w-5/12 mx-auto   " />
-          </div>
-        )}
 
         {loading && (
           <div className="flex gap-6 py-5 items-end">
@@ -328,7 +335,11 @@ const Home = () => {
 
         {/* single folder  */}
       </div>
-
+      {filterData?.length <= 0 && (
+        <div className="flex items-center justify-center h-full w-full">
+          <img src={emptyItemgif} className="w-9/12  md:w-5/12 mx-auto   " />
+        </div>
+      )}
       {/* body  */}
     </div>
   );
