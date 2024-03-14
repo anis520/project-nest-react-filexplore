@@ -243,7 +243,7 @@ const Home = () => {
         className={` w-full p-5   ${
           view
             ? "space-y-2"
-            : "grid   sm:grid-cols-4  md:grid-cols-6 lg:grid-cols-9 gap-4 "
+            : "grid   grid-cols-4  md:grid-cols-6 lg:grid-cols-9 gap-4 "
         }    `}
       >
         {/* single folder */}
