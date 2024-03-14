@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const RootUrl = "http://localhost:3001";
-// export const RootUrl = "https://ifileserver.onrender.com";
+// export const RootUrl = "http://localhost:3001";
+export const RootUrl = "https://ifileserver.onrender.com";
 
 //get all files
 export const getAllFiles = createAsyncThunk(
